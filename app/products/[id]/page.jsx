@@ -22,16 +22,16 @@ const OneProductPage = ({ params }) => {
 	const [quantity, setQuantity] = useState(1);
 
 	return (
-		<section className="flex gap-5">
+		<section className="flex items-center justify-between gap-5">
 			<Image
-				className="px-[10rem] w-1/2 max-w-[50%] h-auto rounded"
+				className="mx-auto max-w-96 w-1/2 h-auto rounded flex-[0.4]"
 				src="/iphonex.png"
 				alt={params.id}
 				width={400}
 				height={400}
 			/>
 
-			<div className="flex flex-col gap-5">
+			<div className="flex flex-col flex-[0.5] gap-5">
 				<h1 className="text-2xl font-[900]">iPhone {title}</h1>
 				<p className="flex items-end gap-2">
 					<span className="text-4xl">₹ 399</span>
@@ -80,7 +80,7 @@ const OneProductPage = ({ params }) => {
 					</Select>
 				</div>
 
-				<div className="flex items-center border rounded">
+				<div className="flex w-fit items-center border rounded">
 					<Button
 						onClick={() => {
 							setQuantity((prev) => prev + 1);
@@ -90,7 +90,7 @@ const OneProductPage = ({ params }) => {
 					>
 						+
 					</Button>
-					<div className="w-full text-center">{quantity}</div>
+					<div className="w-full px-10 text-center">{quantity}</div>
 					<Button
 						onClick={() => {
 							if (quantity <= 1) return;
