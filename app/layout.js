@@ -2,6 +2,7 @@ import { AuthProvider } from "@/context/AuthContext";
 import "./globals.css";
 import Sidebar from "@/shared/Sidebar";
 import { Toaster } from "@/components/ui/sonner";
+import { ThemeProvider } from "@/context/ThemeContext";
 
 export const metadata = {
 	title: "Create Next App",
@@ -12,11 +13,13 @@ export default function RootLayout({ children }) {
 	return (
 		<html lang="en">
 			<body className={`antialiased`}>
-				<AuthProvider>
-					<Sidebar />
-					<main className="container mx-auto px-10">{children}</main>
-					<Toaster />
-				</AuthProvider>
+				<ThemeProvider>
+					<AuthProvider>
+						<Sidebar />
+						<main className="container mx-auto px-10">{children}</main>
+						<Toaster />
+					</AuthProvider>
+				</ThemeProvider>
 			</body>
 		</html>
 	);

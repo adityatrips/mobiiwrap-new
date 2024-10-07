@@ -10,6 +10,9 @@ import {
 	DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { AuthContext } from "@/context/AuthContext";
+import { ThemeContext } from "@/context/ThemeContext";
+import { Moon } from "lucide-react";
+import { Sun } from "lucide-react";
 import { ShoppingCart } from "lucide-react";
 import { MenuIcon } from "lucide-react";
 import Image from "next/image";
@@ -22,6 +25,7 @@ const Sidebar = () => {
 	const [isOpen, setIsOpen] = useState(false);
 	const [isCartOpen, setIsCartOpen] = useState(false);
 	const { user, loggedIn, login, logout } = useContext(AuthContext);
+	const { toggleTheme, theme } = useContext(ThemeContext);
 	const router = useRouter();
 
 	return (
@@ -39,6 +43,15 @@ const Sidebar = () => {
 							className="cursor-pointer"
 							onClick={() => setIsCartOpen((prev) => !prev)}
 						/>
+						{theme === "light" ? (
+							<Button variant="outline" onClick={toggleTheme}>
+								<Moon />
+							</Button>
+						) : (
+							<Button variant="outline" onClick={toggleTheme}>
+								<Sun />
+							</Button>
+						)}
 						<DropdownMenu modal={true}>
 							<DropdownMenuTrigger>
 								<Avatar>
