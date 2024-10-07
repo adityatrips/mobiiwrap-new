@@ -5,7 +5,7 @@ import Image from "next/image";
 const LandingPage = () => {
 	return (
 		<>
-			<section className="h-[calc(100vh-6rem)] flex items-center justify-center flex-col">
+			<section className="flex items-center justify-center flex-col">
 				<div className="mb-20">
 					<h1 className="text-6xl font-[900]">MobiiWrap</h1>
 					<p className="text-xl text-center">Skins for all your devices.</p>

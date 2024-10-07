@@ -17,7 +17,9 @@ export default function RootLayout({ children }) {
 				<ThemeProvider>
 					<AuthProvider>
 						<Sidebar />
-						<main className="container mx-auto px-10">{children}</main>
+						<main className="min-h-[calc(100vh-6rem)] container mx-auto px-10">
+							{children}
+						</main>
 						<Footer />
 						<Toaster />
 					</AuthProvider>
