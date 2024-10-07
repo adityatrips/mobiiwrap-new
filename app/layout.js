@@ -3,6 +3,7 @@ import "./globals.css";
 import Sidebar from "@/shared/Sidebar";
 import { Toaster } from "@/components/ui/sonner";
 import { ThemeProvider } from "@/context/ThemeContext";
+import Footer from "@/shared/Footer";
 
 export const metadata = {
 	title: "Create Next App",
@@ -17,6 +18,7 @@ export default function RootLayout({ children }) {
 					<AuthProvider>
 						<Sidebar />
 						<main className="container mx-auto px-10">{children}</main>
+						<Footer />
 						<Toaster />
 					</AuthProvider>
 				</ThemeProvider>

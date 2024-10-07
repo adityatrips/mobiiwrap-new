@@ -3,7 +3,7 @@ import React from "react";
 
 const AboutPage = () => {
 	return (
-		<section className="h-[calc(100vh-7rem)] flex gap-5 items-center">
+		<section className="h-[calc(100vh-6rem)] flex gap-5 items-center">
 			<Image
 				src="/about.jpg"
 				className="rounded"

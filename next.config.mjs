@@ -1,12 +1,16 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
 	images: {
+		dangerouslyAllowSVG: true,
 		remotePatterns: [
 			{
 				hostname: "images.unsplash.com",
 			},
 			{
 				hostname: "www.apple.com",
+			},
+			{
+				hostname: "placehold.co",
 			},
 		],
 	},
