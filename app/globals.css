@@ -74,7 +74,7 @@
 }
 
 .text-grad {
-	background: linear-gradient(90deg, var(--p), var(--a));
+	background: linear-gradient(90deg, var(--p), var(--s));
 	background-clip: text;
 	-webkit-text-fill-color: transparent;
 	font-weight: 900;

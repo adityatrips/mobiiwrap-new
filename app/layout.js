@@ -11,7 +11,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
 	return (
 		<html lang="en">
-			<body className={`dark antialiased`}>
+			<body className={`antialiased`}>
 				<AuthProvider>
 					<Sidebar />
 					<main className="container mx-auto px-10">{children}</main>
