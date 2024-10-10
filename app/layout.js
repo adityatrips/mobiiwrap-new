@@ -13,17 +13,17 @@ export const metadata = {
 export default function RootLayout({ children }) {
 	return (
 		<html lang="en">
-			<body className={`antialiased`}>
-				<ThemeProvider>
-					<AuthProvider>
+			<body id="main" className="dark">
+				<AuthProvider>
+					<ThemeProvider>
 						<Sidebar />
 						<main className="min-h-[calc(100vh-6rem)] container mx-auto px-10">
 							{children}
 						</main>
 						<Footer />
 						<Toaster />
-					</AuthProvider>
-				</ThemeProvider>
+					</ThemeProvider>
+				</AuthProvider>
 			</body>
 		</html>
 	);

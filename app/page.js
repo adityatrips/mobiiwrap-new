@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import TinderCards from "@/components/TinderCards";
 
 const LandingPage = () => {
 	return (
