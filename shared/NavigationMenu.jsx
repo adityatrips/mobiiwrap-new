@@ -19,6 +19,17 @@ import {
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/context/AuthContext";
 
+const links = [
+	{
+		name: "About",
+		url: "/about",
+	},
+	{
+		name: "Products",
+		url: "/products",
+	},
+];
+
 export default function NavigationMenu() {
 	const [, setIsMenuOpen] = React.useState(false);
 	const router = useRouter();
@@ -27,7 +38,7 @@ export default function NavigationMenu() {
 	return (
 		<Navbar maxWidth="full" onMenuOpenChange={setIsMenuOpen}>
 			<NavbarContent>
-				<NavbarMenuToggle />
+				<NavbarMenuToggle className="flex md:hidden" />
 				<NavbarBrand>
 					<Link href="/">
 						<h3 className="text-foreground">MobiiWrap</h3>
@@ -36,15 +47,11 @@ export default function NavigationMenu() {
 			</NavbarContent>
 
 			<NavbarContent className="hidden md:flex gap-4" justify="center">
-				<NavbarItem>
-					<Link href="#">Home</Link>
-				</NavbarItem>
-				<NavbarItem>
-					<Link href="#">About</Link>
-				</NavbarItem>
-				<NavbarItem>
-					<Link href="#">Products</Link>
-				</NavbarItem>
+				{links.map((link, index) => (
+					<NavbarItem key={index}>
+						<Link href={link.url}>{link.name}</Link>
+					</NavbarItem>
+				))}
 			</NavbarContent>
 
 			<NavbarContent justify="end">
@@ -82,12 +89,11 @@ export default function NavigationMenu() {
 				<NavbarMenuItem>
 					<Link href="#">Home</Link>
 				</NavbarMenuItem>
-				<NavbarMenuItem>
-					<Link href="#">About</Link>
-				</NavbarMenuItem>
-				<NavbarMenuItem>
-					<Link href="#">Products</Link>
-				</NavbarMenuItem>
+				{links.map((link, index) => (
+					<NavbarMenuItem key={index}>
+						<Link href={link.url}>{link.name}</Link>
+					</NavbarMenuItem>
+				))}
 				{user == null ? (
 					<>
 						<NavbarMenuItem>
@@ -101,7 +107,7 @@ export default function NavigationMenu() {
 					</>
 				) : (
 					<Dropdown>
-						<DropdownTrigger>
+						<DropdownTrigger className="w-fit">
 							<Button variant="bordered">{user.displayName}</Button>
 						</DropdownTrigger>
 						<DropdownMenu>

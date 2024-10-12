@@ -4,7 +4,10 @@ const nextConfig = {
 		remotePatterns: [
 			{ hostname: "images.unsplash.com" },
 			{ hostname: "plus.unsplash.com" },
+			{ hostname: "via.placeholder.com" },
+			{ hostname: "fakestoreapi.com" },
 		],
+		dangerouslyAllowSVG: true,
 	},
 };
 

@@ -1,5 +1,10 @@
 import Image from "next/image";
-import React from "react";
+// "use client";
+
+// import { useEffect } from "react";
+// import { mobiles } from "./models";
+// import { doc, setDoc, updateDoc } from "firebase/firestore";
+// import { firestore } from "@/config/firebase";
 
 const IndexPage = () => {
 	return (

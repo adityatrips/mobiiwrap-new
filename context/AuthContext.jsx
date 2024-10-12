@@ -23,7 +23,6 @@ const AuthProvider = ({ children }) => {
 			if (user) {
 				setUser(user);
 				setIsLoggedIn(true);
-				router.push("/");
 			} else {
 				setUser(null);
 				setIsLoggedIn(false);
