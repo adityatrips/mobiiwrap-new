@@ -11,15 +11,15 @@ const OneProductPage = ({ params }) => {
 	const [model, setModel] = useState("");
 
 	return (
-		<div className="flex gap-4 container justify-between items-center mx-auto">
+		<div className="flex flex-col md:flex-row gap-4 container justify-between items-center mx-auto">
 			<Image
 				src={"/apple/iphone.webp"}
 				alt={"Apple iPhone"}
 				width={500}
 				height={500}
-				className="h-auto w-2/6 rounded-lg object-cover"
+				className="h-auto w-full md:w-2/6 rounded-lg object-cover"
 			/>
-			<div className="flex flex-col w-4/6 justify-start gap-2">
+			<div className="flex flex-col w-full md:w-4/6 justify-start gap-2">
 				<h1>Apple iPhone</h1>
 				<span className="text-primary">{params.id}</span>
 

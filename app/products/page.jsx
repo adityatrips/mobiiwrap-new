@@ -25,7 +25,6 @@ const layout = () => {
 						<ProductCard
 							key={product.id}
 							brand={product}
-							id={product}
 							img="/apple/iphone.webp"
 							price={"499"}
 							title={product}
@@ -37,7 +36,7 @@ const layout = () => {
 	);
 };
 
-const ProductCard = ({ brand, id, img, price, title }) => {
+const ProductCard = ({ brand, img, price, title }) => {
 	const router = useRouter();
 
 	return (
