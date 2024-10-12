@@ -1,14 +1,19 @@
 "use client";
 
 import { mobiles } from "@/app/models";
-import { Button, Select, SelectItem } from "@nextui-org/react";
+import { Button, Select, SelectItem, Badge } from "@nextui-org/react";
 import { IndianRupee, ShoppingCart } from "lucide-react";
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 const OneProductPage = ({ params }) => {
-	const [brand, setBrand] = useState("");
-	const [model, setModel] = useState("");
+	const [brand, setBrand] = useState(params.brand);
+	const [model, setModel] = useState(params.model);
+
+	useEffect(() => {
+		setBrand(params.brand);
+		setModel(params.model);
+	}, []);
 
 	return (
 		<div className="flex flex-col md:flex-row gap-4 container justify-between items-center mx-auto">
@@ -20,7 +25,12 @@ const OneProductPage = ({ params }) => {
 				className="h-auto w-full md:w-2/6 rounded-lg object-cover"
 			/>
 			<div className="flex flex-col w-full md:w-4/6 justify-start gap-2">
-				<h1>Apple iPhone</h1>
+				<p className="text-sm text-primary my-0 py-0 font-[900] tracking-widest">
+					{brand.toUpperCase()}
+				</p>
+				<h2 className="mt-0 pt-0">
+					{model.replaceAll("_", " ").toUpperCase()}
+				</h2>
 				<span className="text-primary">{params.id}</span>
 
 				<div className="flex items-start">
@@ -32,15 +42,15 @@ const OneProductPage = ({ params }) => {
 				</div>
 
 				<Select
+					defaultSelectedKeys={[brand]}
 					label="Select a brand"
 					onChange={(e) => {
-						console.log(e);
 						setBrand(e.target.value);
 					}}
 				>
-					{Object.keys(mobiles).map((product, index) => {
+					{Object.keys(mobiles).map((product) => {
 						return (
-							<SelectItem key={index} value={product}>
+							<SelectItem key={product} value={product}>
 								{product.toUpperCase()}
 							</SelectItem>
 						);
@@ -49,16 +59,15 @@ const OneProductPage = ({ params }) => {
 
 				{brand != "" && (
 					<Select
+						defaultSelectedKeys={[model]}
 						label="Select a model"
 						onChange={(e) => {
 							setModel(e.target.value);
-							console.log(brand, model);
 						}}
 					>
-						{mobiles[brand].map((product, index) => {
-							console.log(product);
+						{mobiles[brand].map((product) => {
 							return (
-								<SelectItem key={index} value={product}>
+								<SelectItem key={product} value={product}>
 									{product.replaceAll("_", " ").toUpperCase()}
 								</SelectItem>
 							);

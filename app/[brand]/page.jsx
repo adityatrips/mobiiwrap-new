@@ -1,21 +1,20 @@
 "use client";
 
-import { Button, Card, CardBody, CardFooter, Input } from "@nextui-org/react";
-import { Filter } from "lucide-react";
+import { Card, CardBody, CardFooter, Input } from "@nextui-org/react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
-import { mobiles } from "../models";
+import { mobiles } from "../../models";
 
-const layout = () => {
+const BrandCard = ({ params: { brand } }) => {
 	return (
 		<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-4">
-			{Object.keys(mobiles).map((product) => {
+			{mobiles[brand].map((product) => {
 				return (
 					<ProductCard
 						key={product}
-						brand={product}
+						brand={brand}
 						img="/apple/iphone.webp"
-						price={"499"}
+						price={Math.floor(Math.random() * (999 - 99 + 1) + 99)}
 						title={product}
 					/>
 				);
@@ -30,7 +29,7 @@ const ProductCard = ({ brand, img, price, title }) => {
 	return (
 		<Card
 			onPress={() => {
-				router.push(`/products/${brand}`);
+				router.push(`/products/${brand}/${title}`);
 			}}
 			shadow="sm"
 			isPressable
@@ -47,11 +46,11 @@ const ProductCard = ({ brand, img, price, title }) => {
 				/>
 			</CardBody>
 			<CardFooter className="text-small justify-between">
-				<b>{title.toUpperCase()}</b>
-				<p className="text-default-500">From ₹{price}</p>
+				<b>{title.replaceAll("_", " ").toUpperCase()}</b>
+				<p className="text-default-500">₹{price}</p>
 			</CardFooter>
 		</Card>
 	);
 };
 
-export default layout;
+export default BrandCard;

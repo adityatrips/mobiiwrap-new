@@ -15,7 +15,7 @@ export default function RootLayout({ children }) {
 				<NextUIProvider className="min-h-screen">
 					<AuthProvider>
 						<NavigationMenu />
-						<main className="px-5">{children}</main>
+						<main className="px-5 pb-5">{children}</main>
 					</AuthProvider>
 				</NextUIProvider>
 			</body>
