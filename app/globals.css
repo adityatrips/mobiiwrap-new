@@ -1,27 +1,66 @@
+@import url("https://fonts.googleapis.com/css2?family=Abril+Fatface&family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap");
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@layer base {
+	* {
+		font-family: "DM Sans", sans-serif;
+	}
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
+	h1,
+	h2,
+	h3,
+	.heading {
+		font-family: "Abril Fatface", serif;
+	}
+	h4,
+	h5,
+	h6 {
+		font-family: "DM Sans", sans-serif;
+		font-weight: 600;
+	}
 
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
-}
+	h1 {
+		font-size: 2.5rem;
+	}
+	h2 {
+		font-size: 2rem;
+	}
+	h3 {
+		font-size: 1.5rem;
+	}
+	h4 {
+		font-size: 1.25rem;
+	}
+	h5 {
+		font-size: 1rem;
+	}
+	h6 {
+		font-size: 0.875rem;
+	}
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
+	:root {
+		--text: #071117;
+		--background: #e7f1f8;
+		--primary: #174769;
+		--secondary: #98c6e7;
+		--accent: #3dabfa;
+	}
+	.dark {
+		--text: #e8f2f8;
+		--background: #071118;
+		--primary: #96c6e8;
+		--secondary: #184667;
+		--accent: #0573c2;
+	}
+
+	.h-nav-full {
+		@apply h-[calc(100vh-4rem)];
+	}
+
+	.min-h-nav-full {
+		@apply min-h-[calc(100vh-4rem)];
+	}
 }
