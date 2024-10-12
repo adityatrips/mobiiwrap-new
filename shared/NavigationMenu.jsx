@@ -28,6 +28,10 @@ const links = [
 		name: "Products",
 		url: "/products",
 	},
+	{
+		name: "Feeling Lucky",
+		url: "/feeling-lucky",
+	},
 ];
 
 export default function NavigationMenu() {
