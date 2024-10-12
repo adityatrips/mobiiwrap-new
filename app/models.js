@@ -9,6 +9,7 @@ export const mobiles = {
 		"15_plus",
 		"14_plus",
 		"16_pro",
+		"16_plus",
 		"12",
 		"16",
 		"6",
