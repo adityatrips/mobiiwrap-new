@@ -1,7 +1,7 @@
 "use client";
 
 import { mobiles } from "@/app/models";
-import { Button, Select, SelectItem, Badge } from "@nextui-org/react";
+import { Button, Select, SelectItem } from "@nextui-org/react";
 import { IndianRupee, ShoppingCart } from "lucide-react";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";

@@ -1,9 +1,9 @@
 "use client";
 
-import { Card, CardBody, CardFooter, Input } from "@nextui-org/react";
+import { Card, CardBody, CardFooter } from "@nextui-org/react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
-import { mobiles } from "../../models";
+import { mobiles } from "@/app/models";
 
 const BrandCard = ({ params: { brand } }) => {
 	return (
