@@ -1,19 +1,10 @@
 "use client";
 
 import { mobiles } from "@/app/models";
-import { firestore } from "@/config/firebase";
-import {
-	Badge,
-	Button,
-	CircularProgress,
-	Select,
-	SelectItem,
-} from "@nextui-org/react";
-import { doc, getDoc } from "firebase/firestore";
+import { Button, Select, SelectItem } from "@nextui-org/react";
 import { IndianRupee, ShoppingCart } from "lucide-react";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
 const OneProductPage = ({ params }) => {
 	const [brand, setBrand] = useState("");
@@ -48,14 +39,21 @@ const OneProductPage = ({ params }) => {
 					}}
 				>
 					{Object.keys(mobiles).map((product, index) => {
-						return <SelectItem key={product}>{product}</SelectItem>;
+						return (
+							<SelectItem key={index} value={product}>
+								{product.toUpperCase()}
+							</SelectItem>
+						);
 					})}
 				</Select>
 
 				{brand != "" && (
 					<Select
 						label="Select a model"
-						onChange={(e) => setModel(e.target.value)}
+						onChange={(e) => {
+							setModel(e.target.value);
+							console.log(brand, model);
+						}}
 					>
 						{mobiles[brand].map((product, index) => {
 							console.log(product);
