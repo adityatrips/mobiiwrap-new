@@ -9,6 +9,7 @@ const nextConfig = {
 		],
 		dangerouslyAllowSVG: true,
 	},
+	reactStrictMode: false,
 };
 
 export default nextConfig;

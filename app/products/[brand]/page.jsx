@@ -3,7 +3,7 @@
 import { Card, CardBody, CardFooter } from "@nextui-org/react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
-import { mobiles } from "../../models";
+import { mobiles } from "@/app/models";
 
 const BrandCard = ({ params: { brand } }) => {
 	return (
@@ -14,7 +14,7 @@ const BrandCard = ({ params: { brand } }) => {
 						key={product}
 						brand={brand}
 						img="/apple/iphone.webp"
-						price={"399"}
+						price={"499"}
 						title={product}
 					/>
 				);

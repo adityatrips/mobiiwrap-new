@@ -57,10 +57,10 @@
 	}
 
 	.h-nav-full {
-		@apply h-[calc(100vh-4rem)];
+		@apply h-[calc(100vh-4rem-1.25rem)];
 	}
 
 	.min-h-nav-full {
-		@apply min-h-[calc(100vh-4rem)];
+		@apply min-h-[calc(100vh-4rem-1.25rem)];
 	}
 }
