@@ -66,7 +66,7 @@ const SignupPage = () => {
 					Register
 				</Button>
 				<p className="flex items-center">
-					Already have an account?&nbsp;<Link href="/sign-up">Sign up</Link>
+					Already have an account?&nbsp;<Link href="/log-in">Login</Link>
 				</p>
 			</div>
 		</form>

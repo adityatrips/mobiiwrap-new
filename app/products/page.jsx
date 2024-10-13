@@ -1,15 +1,29 @@
 "use client";
 
-import { Button, Card, CardBody, CardFooter, Input } from "@nextui-org/react";
+import {
+	Button,
+	Card,
+	CardBody,
+	CardFooter,
+	CircularProgress,
+	Input,
+} from "@nextui-org/react";
 import { Filter } from "lucide-react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { mobiles } from "../models";
+import { useBrand } from "@/context/BrandContext";
 
 const layout = () => {
-	return (
+	const { allBrands } = useBrand();
+
+	return allBrands === null ? (
+		<div className="flex items-center justify-center h-nav-full">
+			<CircularProgress />
+		</div>
+	) : (
 		<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-4">
-			{Object.keys(mobiles).map((product) => {
+			{allBrands.map((product) => {
 				return (
 					<ProductCard
 						key={product}

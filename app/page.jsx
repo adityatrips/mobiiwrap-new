@@ -1,6 +1,37 @@
+"use client";
+
+import { firestore } from "@/config/firebase";
+import {
+	addDoc,
+	arrayUnion,
+	collection,
+	doc,
+	DocumentReference,
+	setDoc,
+} from "firebase/firestore";
 import Image from "next/image";
+import { useEffect } from "react";
+import { mobiles } from "./models";
 
 const IndexPage = () => {
+	useEffect(() => {
+		mobiles["nothing"].map((item) => {
+			setDoc(
+				doc(firestore, "products", `nothing_${item}`),
+				{
+					name: item.replaceAll("_", " "),
+					id: item,
+					img: "/apple/iphone.webp",
+					price: 499,
+					category: "skin",
+					colors: ["red", "blue", "green"],
+					stock: 100,
+				},
+				{ merge: true }
+			);
+		});
+	}, []);
+
 	return (
 		<section className="h-nav-full flex flex-col justify-center items-center">
 			<Image

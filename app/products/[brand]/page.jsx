@@ -1,21 +1,44 @@
 "use client";
 
-import { Card, CardBody, CardFooter } from "@nextui-org/react";
+import {
+	Card,
+	CardBody,
+	CardFooter,
+	CircularProgress,
+} from "@nextui-org/react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { mobiles } from "@/app/models";
+import { useBrand } from "@/context/BrandContext";
+import { useEffect, useState } from "react";
 
 const BrandCard = ({ params: { brand } }) => {
-	return (
+	const { getBrand } = useBrand();
+	const [models, setModels] = useState(null);
+
+	useEffect(() => {
+		const fetchModels = async () => {
+			const tmp = await getBrand(brand);
+			setModels(Object.values(tmp));
+		};
+		fetchModels();
+	}, []);
+
+	return models === null ? (
+		<div className="flex items-center justify-center h-nav-full">
+			<CircularProgress />
+		</div>
+	) : (
 		<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-4">
-			{mobiles[brand].map((product) => {
+			{models.map((product) => {
 				return (
 					<ProductCard
-						key={product}
+						key={product.id}
+						id={product.id}
+						img={product.img}
+						name={product.name}
+						price={product.price}
 						brand={brand}
-						img="/apple/iphone.webp"
-						price={"499"}
-						title={product}
 					/>
 				);
 			})}
@@ -23,13 +46,13 @@ const BrandCard = ({ params: { brand } }) => {
 	);
 };
 
-const ProductCard = ({ brand, img, price, title }) => {
+const ProductCard = ({ id, img, name, brand, price }) => {
 	const router = useRouter();
 
 	return (
 		<Card
 			onPress={() => {
-				router.push(`/products/${brand}/${title}`);
+				router.push(`/products/${brand}/${id}`);
 			}}
 			shadow="sm"
 			isPressable
@@ -40,13 +63,13 @@ const ProductCard = ({ brand, img, price, title }) => {
 					radius="lg"
 					height={1000}
 					width={1000}
-					alt={title}
+					alt={name}
 					className="h-auto w-full aspect-[3/4] object-cover"
 					src={img}
 				/>
 			</CardBody>
 			<CardFooter className="text-small justify-between">
-				<b>{title.replaceAll("_", " ").toUpperCase()}</b>
+				<b>{name.replaceAll("_", " ").toUpperCase()}</b>
 				<p className="text-default-500">₹{price}</p>
 			</CardFooter>
 		</Card>

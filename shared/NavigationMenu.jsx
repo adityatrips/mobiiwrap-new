@@ -73,10 +73,17 @@ export default function NavigationMenu() {
 				) : (
 					<Dropdown>
 						<DropdownTrigger>
-							<Button variant="bordered">{user.displayName}</Button>
+							<Button variant="bordered">
+								{user.displayName ?? "Welcome"}
+							</Button>
 						</DropdownTrigger>
 						<DropdownMenu>
-							<DropdownItem>Profile</DropdownItem>
+							<DropdownItem onClick={() => router.push("/profile")}>
+								Profile
+							</DropdownItem>
+							<DropdownItem onClick={() => router.push("/cart")}>
+								Cart
+							</DropdownItem>
 							<DropdownItem
 								onClick={logout}
 								className="text-danger"

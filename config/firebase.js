@@ -4,13 +4,12 @@ import { getFirestore } from "firebase/firestore";
 import { getStorage } from "firebase/storage";
 
 const firebaseConfig = {
-	apiKey: "AIzaSyD_NpenHzRP-z7z4wargYwbsQzLRlP8qUg",
-	authDomain: "mobii-wrap.firebaseapp.com",
-	projectId: "mobii-wrap",
-	storageBucket: "mobii-wrap.appspot.com",
-	messagingSenderId: "885749096262",
-	appId: "1:885749096262:web:522be93e0cc088b1b8cf47",
-	measurementId: "G-ZBTBBF72W9",
+	apiKey: "AIzaSyAkmDoF-JMwpZ9emJ8Iooz0UtrVE6jrFWs",
+	authDomain: "mobiiwrap-2eba7.firebaseapp.com",
+	projectId: "mobiiwrap-2eba7",
+	storageBucket: "mobiiwrap-2eba7.appspot.com",
+	messagingSenderId: "229011759549",
+	appId: "1:229011759549:web:d4e712fae9c7f9250332d4",
 };
 
 // Initialize Firebase

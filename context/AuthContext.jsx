@@ -23,9 +23,11 @@ const AuthProvider = ({ children }) => {
 			if (user) {
 				setUser(user);
 				setIsLoggedIn(true);
+				window.localStorage.setItem("uid", user.uid);
 			} else {
 				setUser(null);
 				setIsLoggedIn(false);
+				window.localStorage.removeItem("uid");
 			}
 		});
 		return unsubscribe;
@@ -33,22 +35,28 @@ const AuthProvider = ({ children }) => {
 
 	const signup = async (name, email, password) => {
 		try {
-			createUserWithEmailAndPassword(auth, email, password).then(
-				async (newUser) => {
-					await setDoc(doc(firestore, "users", newUser.user.uid), {
-						uid: newUser.user.uid,
-						name,
-						email,
-						cart: [],
-						wishlist: [],
-						orders: [],
-						address: "",
-					});
-					await updateProfile(newUser.user, {
-						displayName: name,
-					});
-				}
+			const newUser = await createUserWithEmailAndPassword(
+				auth,
+				email,
+				password
 			);
+			await setDoc(doc(firestore, "users", newUser.user.uid), {
+				uid: newUser.user.uid,
+				name,
+				email,
+				address: "",
+			});
+			await setDoc(doc(firestore, "cart", newUser.user.uid), {
+				items: [],
+				totalItems: 0,
+				totalPrice: 0,
+			});
+			await setDoc(doc(firestore, "wishlist", newUser.user.uid), {});
+			await setDoc(doc(firestore, "orders", newUser.user.uid), {});
+
+			await updateProfile(newUser.user, {
+				displayName: name,
+			});
 		} catch (error) {
 			console.error(error);
 		}

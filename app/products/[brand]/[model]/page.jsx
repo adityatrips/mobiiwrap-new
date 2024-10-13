@@ -1,18 +1,40 @@
 "use client";
 
 import { mobiles } from "@/app/models";
-import { Button, Select, SelectItem } from "@nextui-org/react";
+import { useBrand } from "@/context/BrandContext";
+import {
+	Button,
+	CircularProgress,
+	Select,
+	SelectItem,
+} from "@nextui-org/react";
 import { IndianRupee, ShoppingCart } from "lucide-react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
 const OneProductPage = ({ params }) => {
-	const [brand, setBrand] = useState([params.brand]);
-	const [model, setModel] = useState([params.model]);
+	const [brand] = useState([params.brand]);
+	const [model] = useState([params.model]);
 	const router = useRouter();
+	const [models, setModels] = useState(null);
 
-	return (
+	useEffect(() => {
+		const fetchBrand = async () => {
+			const tmp = await getBrand(params.brand);
+			setModels(Object.values(tmp));
+		};
+		fetchBrand();
+	}, []);
+
+	const { allBrands, getBrand } = useBrand();
+	console.log(`allBrands`, allBrands);
+
+	return models === null ? (
+		<div className="flex justify-center items-center h-nav-full">
+			<CircularProgress />
+		</div>
+	) : (
 		<div className="flex flex-col md:flex-row gap-4 container justify-between items-center mx-auto">
 			<Image
 				src={"/apple/iphone.webp"}
@@ -28,7 +50,7 @@ const OneProductPage = ({ params }) => {
 				<h2 className="mt-0 pt-0">
 					{model[0].replaceAll("_", " ").toUpperCase()}
 				</h2>
-				<span className="text-primary">{params.id}</span>
+				<span className="text-primary">{params.model}</span>
 
 				<div className="flex items-start">
 					<span>₹</span>
@@ -46,7 +68,7 @@ const OneProductPage = ({ params }) => {
 						router.push(`/products/${e.currentKey}`);
 					}}
 				>
-					{Object.keys(mobiles).map((product) => {
+					{allBrands.map((product) => {
 						return (
 							<SelectItem key={product} value={product}>
 								{product.toUpperCase()}
@@ -65,10 +87,14 @@ const OneProductPage = ({ params }) => {
 							router.push(`/products/${brand[0]}/${e.currentKey}`);
 						}}
 					>
-						{mobiles[brand[0]].map((product) => {
+						{models.map((product) => {
 							return (
-								<SelectItem key={product} value={product}>
-									{product.replaceAll("_", " ").toUpperCase()}
+								<SelectItem
+									isDisabled={product.id === params.model}
+									key={product.id}
+									value={product.id}
+								>
+									{product.name.replaceAll("_", " ").toUpperCase()}
 								</SelectItem>
 							);
 						})}
