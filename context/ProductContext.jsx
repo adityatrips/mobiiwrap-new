@@ -8,7 +8,30 @@ const ProductProvider = ({ children }) => {
 	const [products, setProducts] = useState(null);
 
 	useEffect(() => {
+		if (products == null || products?.length < 1) {
+			fetchNProducts(5);
+		}
+	}, [products?.length]);
+
+	const fetchNProducts = async (n) => {
+		setProducts(null);
+		try {
+			const res = await fetch(`/api/products?qty=${n}`, {
+				method: "GET",
+				headers: {
+					"Content-Type": "application/json",
+				},
+			});
+			const data = await res.json();
+			setProducts(data);
+		} catch (error) {
+			console.error(error);
+		}
+	};
+
+	useEffect(() => {
 		const fetchProducts = async () => {
+			setProducts(null);
 			try {
 				const res = await fetch("/api/products", {
 					method: "GET",
@@ -31,6 +54,8 @@ const ProductProvider = ({ children }) => {
 		<ProductContext.Provider
 			value={{
 				products,
+				setProducts,
+				fetchNProducts,
 			}}
 		>
 			{children}

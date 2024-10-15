@@ -101,7 +101,7 @@ const ProductPage = ({ params: { prod } }) => {
 				</div>
 			</div>
 			<Divider className="my-5" />
-			<h3>You might also like</h3>
+			<h3>You might also like (WIP)</h3>
 		</>
 	);
 };

@@ -24,19 +24,16 @@ const CartSchema = new Schema({
 			},
 		},
 	],
+	totalItems: {
+		type: Number,
+		required: true,
+		default: 0,
+	},
 	total: {
 		type: Number,
 		required: true,
+		default: 0,
 	},
-});
-
-CartSchema.pre("save", async function (next) {
-	let total = 0;
-	this.products.forEach((product) => {
-		total += product.cost;
-	});
-	this.total = total;
-	next();
 });
 
 export default models.Cart || model("Cart", CartSchema);

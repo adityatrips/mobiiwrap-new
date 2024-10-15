@@ -1,66 +1,69 @@
-import { useState } from "react";
+"use client";
+
+import { useProducts } from "@/context/ProductContext";
 import { motion, useMotionValue, useTransform } from "framer-motion";
 import { useRouter } from "next/navigation";
+import { useEffect } from "react";
+import CustomLoading from "./CustomLoading";
 
 const TinderCards = ({ className }) => {
-	const [cards, setCards] = useState(cardData);
+	const { fetchNProducts, products, setProducts } = useProducts();
 
-	return (
-		<div className={`${className} grid h-[500px] w-full place-items-center`}>
-			{cards.map((card) => {
-				return (
-					<Card key={card.id} cards={cards} setCards={setCards} {...card} />
-				);
-			})}
-		</div>
+	useEffect(() => {
+		fetchNProducts(5);
+	}, []);
+
+	return products == null ? (
+		<CustomLoading />
+	) : (
+		<>
+			<h3 className="text-center pb-5">Swipe em like it&apos;s hot</h3>
+			<div className={`${className} grid h-full w-full place-items-center`}>
+				{products.map((card, id) => {
+					return (
+						<Card
+							key={card.slug}
+							id={card.slug}
+							cards={card}
+							setProducts={setProducts}
+						/>
+					);
+				})}
+			</div>
+		</>
 	);
 };
 
-const Card = ({ id, url, setCards, cards }) => {
+const Card = ({ key, id, setProducts, cards }) => {
 	const router = useRouter();
-
 	const x = useMotionValue(0);
-
-	const rotateRaw = useTransform(x, [-150, 150], [-18, 18]);
 	const opacity = useTransform(x, [-150, 0, 150], [0, 1, 0]);
-
-	const isFront = id === cards[cards.length - 1].id;
-
-	const rotate = useTransform(() => {
-		const offset = isFront ? 0 : id % 2 ? 6 : -6;
-
-		return `${rotateRaw.get() + offset}deg`;
-	});
+	const rotate = useTransform(x, [-200, 0, 200], [-8, 0, 8]);
 
 	const handleDragEnd = () => {
 		if (Math.abs(x.get()) > 50) {
-			setCards((pv) => pv.filter((v) => v.id !== id));
+			setProducts((pv) => pv.filter((v) => v.slug !== id));
 		}
 	};
 
 	return (
 		<motion.img
+			key={key}
 			onClick={() => {
-				router.push("/products/apple/16_plus");
+				router.push(`/products/${id}`);
 			}}
-			src={url}
+			src={cards.image}
 			alt="Placeholder alt"
-			className="h-96 w-72 origin-bottom rounded-lg bg-white object-cover hover:cursor-grab active:cursor-grabbing"
+			className="h-[calc(100vh-9rem)] origin-bottom rounded-lg object-cover hover:cursor-grab active:cursor-grabbing"
 			style={{
 				gridRow: 1,
 				gridColumn: 1,
 				x,
-				opacity,
 				rotate,
+				opacity,
 				transition: "0.125s transform",
-				boxShadow: isFront
-					? "0 20px 25px -5px rgb(0 0 0 / 0.5), 0 8px 10px -6px rgb(0 0 0 / 0.5)"
-					: undefined,
 			}}
-			animate={{
-				scale: isFront ? 1 : 0.98,
-			}}
-			drag={isFront ? "x" : false}
+			drag={"x"}
 			dragConstraints={{
 				left: 0,
 				right: 0,
