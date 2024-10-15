@@ -14,7 +14,7 @@ import Image from "next/image";
 import { mobiles } from "../models";
 import { useBrand } from "@/context/BrandContext";
 
-const layout = () => {
+const Products = () => {
 	const { allBrands } = useBrand();
 
 	return allBrands === null ? (
@@ -68,4 +68,4 @@ const ProductCard = ({ brand, img, price, title }) => {
 	);
 };
 
-export default layout;
+export default Products;

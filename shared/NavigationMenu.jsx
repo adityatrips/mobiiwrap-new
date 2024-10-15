@@ -37,7 +37,7 @@ const links = [
 export default function NavigationMenu() {
 	const [, setIsMenuOpen] = React.useState(false);
 	const router = useRouter();
-	const { user, logout } = useAuth();
+	const { user, isLoggedIn, logout } = useAuth();
 
 	return (
 		<Navbar maxWidth="full" onMenuOpenChange={setIsMenuOpen}>
@@ -59,7 +59,7 @@ export default function NavigationMenu() {
 			</NavbarContent>
 
 			<NavbarContent justify="end">
-				{user == null ? (
+				{!isLoggedIn ? (
 					<>
 						<NavbarItem>
 							<Link href="/log-in">Login</Link>
@@ -73,9 +73,7 @@ export default function NavigationMenu() {
 				) : (
 					<Dropdown>
 						<DropdownTrigger>
-							<Button variant="bordered">
-								{user.displayName ?? "Welcome"}
-							</Button>
+							<Button variant="bordered">Welcome back</Button>
 						</DropdownTrigger>
 						<DropdownMenu>
 							<DropdownItem onClick={() => router.push("/profile")}>

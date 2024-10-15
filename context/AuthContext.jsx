@@ -1,15 +1,8 @@
 "use client";
 
-import { auth, firestore } from "@/config/firebase";
-import {
-	createUserWithEmailAndPassword,
-	signInWithEmailAndPassword,
-	signOut,
-	updateProfile,
-} from "firebase/auth";
-import { doc, setDoc } from "firebase/firestore";
 import { useRouter } from "next/navigation";
 import { createContext, useContext, useEffect, useState } from "react";
+import jwt from "jsonwebtoken";
 
 const AuthContext = createContext();
 
@@ -19,44 +12,26 @@ const AuthProvider = ({ children }) => {
 	const router = useRouter();
 
 	useEffect(() => {
-		const unsubscribe = auth.onAuthStateChanged((user) => {
-			if (user) {
-				setUser(user);
-				setIsLoggedIn(true);
-				window.localStorage.setItem("uid", user.uid);
-			} else {
-				setUser(null);
-				setIsLoggedIn(false);
-				window.localStorage.removeItem("uid");
-			}
-		});
-		return unsubscribe;
+		const token = localStorage.getItem("token");
+		if (token) {
+			const data = jwt.decode(token);
+			setUser(data);
+			setIsLoggedIn(true);
+		}
 	}, []);
 
 	const signup = async (name, email, password) => {
 		try {
-			const newUser = await createUserWithEmailAndPassword(
-				auth,
-				email,
-				password
-			);
-			await setDoc(doc(firestore, "users", newUser.user.uid), {
-				uid: newUser.user.uid,
-				name,
-				email,
-				address: "",
+			const user = await fetch("/api/auth/register", {
+				method: "POST",
+				body: JSON.stringify({ name, email, password }),
+				headers: {
+					"Content-Type": "application/json",
+				},
 			});
-			await setDoc(doc(firestore, "cart", newUser.user.uid), {
-				items: [],
-				totalItems: 0,
-				totalPrice: 0,
-			});
-			await setDoc(doc(firestore, "wishlist", newUser.user.uid), {});
-			await setDoc(doc(firestore, "orders", newUser.user.uid), {});
-
-			await updateProfile(newUser.user, {
-				displayName: name,
-			});
+			const json = await user.json();
+			console.log(json.token);
+			localStorage.setItem("token", json.token);
 		} catch (error) {
 			console.error(error);
 		}
@@ -64,8 +39,9 @@ const AuthProvider = ({ children }) => {
 
 	const logout = async () => {
 		try {
-			await signOut(auth);
+			localStorage.removeItem("token");
 			setUser(null);
+			setIsLoggedIn(false);
 			router.push("/");
 		} catch (error) {
 			console.error(error);
@@ -74,9 +50,20 @@ const AuthProvider = ({ children }) => {
 
 	const login = async (email, password) => {
 		try {
-			await signInWithEmailAndPassword(auth, email, password);
-		} catch (error) {
-			console.error(error);
+			const user = await fetch("/api/auth/login", {
+				method: "POST",
+				body: JSON.stringify({ email, password }),
+				headers: {
+					"Content-Type": "application/json",
+				},
+			});
+			const json = await user.json();
+			console.log(json.token);
+			setIsLoggedIn(true);
+			localStorage.setItem("token", json.token);
+		} catch (e) {
+			console.error(e);
+			setIsLoggedIn(false);
 		}
 	};
 
