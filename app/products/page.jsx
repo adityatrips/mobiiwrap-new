@@ -12,10 +12,9 @@ import { Filter } from "lucide-react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { mobiles } from "../models";
-import { useBrand } from "@/context/BrandContext";
 
 const Products = () => {
-	const { allBrands } = useBrand();
+	const allBrands = Object.keys(mobiles);
 
 	return allBrands === null ? (
 		<div className="flex items-center justify-center h-nav-full">

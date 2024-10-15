@@ -9,20 +9,10 @@ import {
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { mobiles } from "@/app/models";
-import { useBrand } from "@/context/BrandContext";
-import { useEffect, useState } from "react";
+import { toTitleCase } from "@/utils/str_fuctions";
 
 const BrandCard = ({ params: { brand } }) => {
-	const { getBrand } = useBrand();
-	const [models, setModels] = useState(null);
-
-	useEffect(() => {
-		const fetchModels = async () => {
-			const tmp = await getBrand(brand);
-			setModels(Object.values(tmp));
-		};
-		fetchModels();
-	}, []);
+	const models = mobiles[brand];
 
 	return models === null ? (
 		<div className="flex items-center justify-center h-nav-full">
@@ -33,11 +23,11 @@ const BrandCard = ({ params: { brand } }) => {
 			{models.map((product) => {
 				return (
 					<ProductCard
-						key={product.id}
-						id={product.id}
-						img={product.img}
-						name={product.name}
-						price={product.price}
+						key={product}
+						id={product}
+						img={"/apple/iphone.webp"}
+						name={toTitleCase(product)}
+						price={"499"}
 						brand={brand}
 					/>
 				);

@@ -1,7 +1,7 @@
 "use client";
 
 import { mobiles } from "@/app/models";
-import { useBrand } from "@/context/BrandContext";
+import { toTitleCase } from "@/utils/str_fuctions";
 import {
 	Button,
 	CircularProgress,
@@ -11,23 +11,15 @@ import {
 import { IndianRupee, ShoppingCart } from "lucide-react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
 const OneProductPage = ({ params }) => {
 	const [brand] = useState([params.brand]);
 	const [model] = useState([params.model]);
 	const router = useRouter();
-	const [models, setModels] = useState(null);
+	const allBrands = Object.keys(mobiles);
+	const models = mobiles[brand];
 
-	useEffect(() => {
-		const fetchBrand = async () => {
-			const tmp = await getBrand(params.brand);
-			setModels(Object.values(tmp));
-		};
-		fetchBrand();
-	}, []);
-
-	const { allBrands, getBrand } = useBrand();
 	console.log(`allBrands`, allBrands);
 
 	return models === null ? (
@@ -47,9 +39,7 @@ const OneProductPage = ({ params }) => {
 				<p className="text-sm text-primary my-0 py-0 font-[900] tracking-widest">
 					{brand[0].toUpperCase()}
 				</p>
-				<h2 className="mt-0 pt-0">
-					{model[0].replaceAll("_", " ").toUpperCase()}
-				</h2>
+				<h2 className="mt-0 pt-0">{toTitleCase(model)}</h2>
 				<span className="text-primary">{params.model}</span>
 
 				<div className="flex items-start">
@@ -91,10 +81,10 @@ const OneProductPage = ({ params }) => {
 							return (
 								<SelectItem
 									isDisabled={product.id === params.model}
-									key={product.id}
-									value={product.id}
+									key={product}
+									value={product}
 								>
-									{product.name.replaceAll("_", " ").toUpperCase()}
+									{toTitleCase(product)}
 								</SelectItem>
 							);
 						})}

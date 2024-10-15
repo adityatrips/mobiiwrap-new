@@ -2,7 +2,6 @@ import "./globals.css";
 import { NextUIProvider } from "@nextui-org/react";
 import NavigationMenu from "@/shared/NavigationMenu";
 import { AuthProvider } from "@/context/AuthContext";
-import { BrandProvider } from "@/context/BrandContext";
 import { CartProvider } from "@/context/CartContext";
 
 export const metadata = {
@@ -29,10 +28,8 @@ export default function RootLayout({ children }) {
 				<NextUIProvider className="min-h-screen">
 					<AuthProvider>
 						<CartProvider>
-							<BrandProvider>
-								<NavigationMenu />
-								<main className="px-5 pb-5">{children}</main>
-							</BrandProvider>
+							<NavigationMenu />
+							<main className="px-5 pb-5">{children}</main>
 						</CartProvider>
 					</AuthProvider>
 				</NextUIProvider>
