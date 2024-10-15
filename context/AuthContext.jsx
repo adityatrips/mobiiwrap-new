@@ -3,6 +3,7 @@
 import { useRouter } from "next/navigation";
 import { createContext, useContext, useEffect, useState } from "react";
 import jwt from "jsonwebtoken";
+import toast from "react-hot-toast";
 
 const AuthContext = createContext();
 
@@ -17,6 +18,7 @@ const AuthProvider = ({ children }) => {
 			const data = jwt.decode(token);
 			setUser(data);
 			setIsLoggedIn(true);
+			toast.success("Welcome back!");
 		}
 	}, []);
 
@@ -32,7 +34,10 @@ const AuthProvider = ({ children }) => {
 			const json = await user.json();
 			console.log(json.token);
 			localStorage.setItem("token", json.token);
+
+			toast.success("Registration successful!");
 		} catch (error) {
+			toast.error("An error occurred. Please try again.");
 			console.error(error);
 		}
 	};
@@ -42,8 +47,10 @@ const AuthProvider = ({ children }) => {
 			localStorage.removeItem("token");
 			setUser(null);
 			setIsLoggedIn(false);
+			toast.success("Logged out successfully!");
 			router.push("/");
 		} catch (error) {
+			toast.error("An error occurred. Please try again.");
 			console.error(error);
 		}
 	};
@@ -62,6 +69,7 @@ const AuthProvider = ({ children }) => {
 			setIsLoggedIn(true);
 			localStorage.setItem("token", json.token);
 		} catch (e) {
+			toast.error("An error occurred. Please try again.");
 			console.error(e);
 			setIsLoggedIn(false);
 		}

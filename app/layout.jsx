@@ -3,6 +3,8 @@ import { NextUIProvider } from "@nextui-org/react";
 import NavigationMenu from "@/shared/NavigationMenu";
 import { AuthProvider } from "@/context/AuthContext";
 import { CartProvider } from "@/context/CartContext";
+import toast, { Toaster } from "react-hot-toast";
+import { ProductProvider } from "@/context/ProductContext";
 
 export const metadata = {
 	title: "MobiiWrap",
@@ -27,10 +29,22 @@ export default function RootLayout({ children }) {
 			<body className={"antialiased dark bg-background text-foreground"}>
 				<NextUIProvider className="min-h-screen">
 					<AuthProvider>
-						<CartProvider>
-							<NavigationMenu />
-							<main className="px-5 pb-5">{children}</main>
-						</CartProvider>
+						<ProductProvider>
+							<CartProvider>
+								<NavigationMenu />
+								<Toaster
+									toastOptions={{
+										style: {
+											backgroundColor: "hsl(var(--nextui-background))",
+											color: "hsl(var(--nextui-foreground))",
+											border: "1px solid hsl(var(--nextui-default))",
+										},
+										position: "bottom-right",
+									}}
+								/>
+								<main className="px-5 pb-5">{children}</main>
+							</CartProvider>
+						</ProductProvider>
 					</AuthProvider>
 				</NextUIProvider>
 			</body>
