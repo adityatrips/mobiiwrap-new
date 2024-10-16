@@ -23,14 +23,17 @@ const links = [
 	{
 		name: "About",
 		url: "/about",
+		className: "",
 	},
 	{
 		name: "Products",
 		url: "/products",
+		className: "",
 	},
 	{
 		name: "Feeling Lucky",
 		url: "/feeling-lucky",
+		className: "block md:hidden",
 	},
 ];
 
@@ -53,7 +56,9 @@ export default function NavigationMenu() {
 			<NavbarContent className="hidden md:flex gap-4" justify="center">
 				{links.map((link, index) => (
 					<NavbarItem key={index}>
-						<Link href={link.url}>{link.name}</Link>
+						<Link className={link.className} href={link.url}>
+							{link.name}
+						</Link>
 					</NavbarItem>
 				))}
 			</NavbarContent>
@@ -73,7 +78,7 @@ export default function NavigationMenu() {
 				) : (
 					<Dropdown>
 						<DropdownTrigger>
-							<Button variant="bordered">Welcome back</Button>
+							<Button variant="bordered">{user.name}</Button>
 						</DropdownTrigger>
 						<DropdownMenu>
 							<DropdownItem onClick={() => router.push("/profile")}>
@@ -116,8 +121,8 @@ export default function NavigationMenu() {
 					</>
 				) : (
 					<Dropdown>
-						<DropdownTrigger className="w-fit">
-							<Button variant="bordered">{user.displayName}</Button>
+						<DropdownTrigger className="w-full">
+							<Button variant="bordered">{user.name}</Button>
 						</DropdownTrigger>
 						<DropdownMenu>
 							<DropdownItem>Profile</DropdownItem>

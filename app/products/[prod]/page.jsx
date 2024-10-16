@@ -7,11 +7,15 @@ import { IndianRupee, ShoppingCart } from "lucide-react";
 import CustomLoading from "@/shared/CustomLoading";
 import { toTitleCase } from "@/utils/str_fuctions";
 import { mobiles } from "@/app/models";
+import { useCart } from "@/context/CartContext";
 
 const ProductPage = ({ params: { prod } }) => {
 	const [product, setProduct] = useState(null);
 	const [brand, setBrand] = useState("apple");
 	const [model, setModel] = useState("16_pro");
+	const [quantity, setQuantity] = useState(1);
+
+	const { addToCart } = useCart();
 
 	useEffect(() => {
 		const fetchProduct = async () => {
@@ -31,8 +35,8 @@ const ProductPage = ({ params: { prod } }) => {
 				<Image
 					src={product.image}
 					alt={"Apple iPhone"}
-					width={500}
-					height={500}
+					width={720}
+					height={1280}
 					className="h-auto w-full md:w-2/6 rounded-lg object-cover"
 				/>
 				<div className="flex flex-col w-full md:w-4/6 justify-start gap-2">
@@ -49,6 +53,7 @@ const ProductPage = ({ params: { prod } }) => {
 							<span>00</span>
 						</span>
 					</div>
+
 					<Select
 						label="Select a brand"
 						selectionMode="single"
@@ -84,7 +89,25 @@ const ProductPage = ({ params: { prod } }) => {
 							})}
 						</Select>
 					)}
-
+					<div className="w-full gap-5 flex items-center justify-between">
+						<Button
+							onClick={() => {
+								if (quantity > 1) setQuantity(quantity - 1);
+							}}
+							className="flex-[0.2]"
+						>
+							-
+						</Button>
+						<span className="flex-[0.6] text-center">{quantity}</span>
+						<Button
+							onClick={() => {
+								setQuantity(quantity + 1);
+							}}
+							className="flex-[0.2]"
+						>
+							+
+						</Button>
+					</div>
 					<div className="flex gap-4 w-full">
 						<Button
 							variant="shadow"
@@ -94,8 +117,14 @@ const ProductPage = ({ params: { prod } }) => {
 							Buy Now
 							<IndianRupee />
 						</Button>
-						<Button className="flex w-full justify-between">
-							Add to cart <ShoppingCart />
+						<Button
+							onClick={() => {
+								addToCart(product._id, quantity, product.price);
+							}}
+							className="flex w-full justify-between"
+						>
+							Add to cart
+							<ShoppingCart />
 						</Button>
 					</div>
 				</div>

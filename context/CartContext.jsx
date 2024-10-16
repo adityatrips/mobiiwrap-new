@@ -2,54 +2,38 @@
 
 import { createContext, useContext, useEffect, useState } from "react";
 import { useAuth } from "./AuthContext";
+import toast from "react-hot-toast";
 
 const CartContext = createContext();
 
 const CartProvider = ({ children }) => {
-	// const [cart, setCart] = useState(null);
-	// let uid;
+	const [cart, setCart] = useState(null);
+	const { user, isLoggedIn } = useAuth();
 
-	// useEffect(() => {
-	// 	uid = localStorage.getItem("uid");
-	// 	getCartItems();
-	// }, []);
+	useEffect(() => {
+		fetchCart();
+	}, [isLoggedIn]);
 
-	// const getCartItems = async () => {
-	// 	const cartItems = await getDoc(doc(firestore, "cart", uid));
-	// 	let d = cartItems.data().items;
-	// 	setCart(d);
-	// 	return d;
-	// };
+	const fetchCart = async () => {
+		if (!isLoggedIn || !user) return;
+		const res = await fetch(`/api/cart?user=${user._id}`);
+		const data = await res.json();
+		setCart(data.cart);
+	};
 
-	// const addItemToCart = async (brand, model, quantity, price) => {
-	// 	const cartItems = await getCartItems();
-
-	// 	updateDoc(
-	// 		doc(firestore, "cart", uid),
-	// 		{
-	// 			items: [
-	// 				...cartItems,
-	// 				{
-	// 					brand,
-	// 					model,
-	// 					quantity,
-	// 					reference: doc(firestore, "products", `${brand}_${model}`),
-	// 				},
-	// 			],
-	// 			totalItems: increment(quantity),
-	// 			totalPrice: increment(price * quantity),
-	// 		},
-	// 		{ merge: true }
-	// 	);
-	// };
-
-	// useEffect(() => {
-	// 	getCartItems();
-	// 	addItemToCart("nothing", "phone_1", 2, 499);
-	// }, []);
+	const addToCart = async (item, quantity, cost) => {
+		await fetch("/api/cart", {
+			method: "POST",
+			body: JSON.stringify({ item, quantity, userId: user._id, cost }),
+		});
+		toast.success("Added to cart");
+		fetchCart();
+	};
 
 	return (
-		<CartContext.Provider value={{ cart: [] }}>{children}</CartContext.Provider>
+		<CartContext.Provider value={{ cart, addToCart, fetchCart }}>
+			{children}
+		</CartContext.Provider>
 	);
 };
 

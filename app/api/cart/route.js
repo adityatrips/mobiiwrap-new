@@ -1,9 +1,9 @@
 import Cart from "@/models/Cart";
 import Product from "@/models/Product";
 import { connectToDb } from "@/config/db";
+
 export const GET = async (req, res) => {
 	connectToDb();
-
 	try {
 		const cart = await Cart.findOne({
 			user: req.nextUrl.searchParams.get("user"),

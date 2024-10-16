@@ -17,6 +17,7 @@ const AuthProvider = ({ children }) => {
 		if (token) {
 			const data = jwt.decode(token);
 			setUser(data);
+			console.log(data);
 			setIsLoggedIn(true);
 			toast.success("Welcome back!");
 		}

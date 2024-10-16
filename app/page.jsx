@@ -9,7 +9,7 @@ const IndexPage = () => {
 				alt="iphone_top"
 				width={800}
 				height={490}
-				className="absolute bottom-0 max-w-[75%] md:max-w-[50%] h-auto"
+				className="fixed bottom-0 max-w-[75%] md:max-w-[50%] h-auto"
 				style={{
 					transform: "translateX(-50%)",
 					left: "50%",
