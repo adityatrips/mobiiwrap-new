@@ -78,7 +78,7 @@ export default function NavigationMenu() {
 				) : (
 					<Dropdown>
 						<DropdownTrigger>
-							<Button variant="bordered">{user.name}</Button>
+							<Button variant="bordered">{user?.name ?? "Welcome user"}</Button>
 						</DropdownTrigger>
 						<DropdownMenu>
 							<DropdownItem onClick={() => router.push("/profile")}>
@@ -122,7 +122,7 @@ export default function NavigationMenu() {
 				) : (
 					<Dropdown>
 						<DropdownTrigger className="w-full">
-							<Button variant="bordered">{user.name}</Button>
+							<Button variant="bordered">{user?.name ?? "Welcome user"}</Button>
 						</DropdownTrigger>
 						<DropdownMenu>
 							<DropdownItem>Profile</DropdownItem>
